@@ -24,9 +24,20 @@ public class ReactorService {
         double Xc = request.getXc();
         double Xd = request.getXd();
 
+        if (h <= 0) h = 0.1;
+        if (lMax <= 0) lMax = 2.0;
+        if (U == 0) U = 1e-6;
+
         for (double l = 0.0; l <= lMax + 1e-10; l += h) {
             double sum = Xa + Xb + Xc + Xd;
-            result.add(new ReactorPoint(l, Xa, Xb, Xc, Xd, sum));
+            result.add(new ReactorPoint(
+                    round(l),
+                    round(Xa),
+                    round(Xb),
+                    round(Xc),
+                    round(Xd),
+                    round(sum)
+            ));
 
             double Xa_star = Xa + h * (-(k1 + k2) * Xa + k3 * Xc) / U;
             double Xb_star = Xb + h * (k1 * Xa) / U;
@@ -59,6 +70,17 @@ public class ReactorService {
             }
         }
 
-        return closest;
+        return new ReactorPoint(
+                round(closest.getL()),
+                round(closest.getXa()),
+                round(closest.getXb()),
+                round(closest.getXc()),
+                round(closest.getXd()),
+                round(closest.getSum())
+        );
+    }
+
+    private double round(double value) {
+        return Math.round(value * 10000.0) / 10000.0;
     }
 }

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 public class TaskThirdService {
-    public TaskThirdResponse process(MultipartFile file, int d, int N, double Ftable, int method) throws Exception {
+    public TaskThirdResponse process(MultipartFile file, int d, int Ne, int Nu, double Ftable, int method) throws Exception {
         List<Double> tList = new ArrayList<>();
         List<Double> yEList = new ArrayList<>();
         List<Double> uList = new ArrayList<>();
@@ -45,6 +45,7 @@ public class TaskThirdService {
         int m = tList.size();
         int pad = d + 5;
         int arrLen = m + pad + 5;
+        int N = Ne + Nu;
         double[] T = new double[arrLen];
         double[] y_e = new double[arrLen];
         double[] u = new double[arrLen];
